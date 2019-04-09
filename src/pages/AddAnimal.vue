@@ -16,7 +16,7 @@
         </div>
         <div class="col-12">
           <q-field>
-            <q-input float-label="Data de Nascimento" v-model="animal.birthday"/>
+            <q-input type="date" stack-label="Data de Nascimento" v-model="animal.birthday"/>
           </q-field>
         </div>
       </div>

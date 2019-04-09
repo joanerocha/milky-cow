@@ -29,7 +29,9 @@
             <br>
             <p class="text-faded">Último Parto: {{animal.parturition}}</p>
             <p class="text-faded">Data de Fecundação: {{animal.fecudation}}</p>
-            <p class="text-faded">Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
+            <p
+              class="text-faded"
+            >Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
           </q-card-main>
           <q-card-separator/>
           <q-card-actions>
@@ -78,13 +80,7 @@
         <q-field>
           <q-toggle style="padding:16px" v-model="animal.pregnancy" label="Prenha"/>
         </q-field>
-        <q-btn
-          round
-          @click="save"
-          color="green"
-          icon="check"
-          style="margin-right: 8px"
-        />
+        <q-btn round @click="save" color="green" icon="check" style="margin-right: 8px"/>
       </div>
     </q-modal>
   </div>
@@ -102,8 +98,8 @@ export default {
   },
   methods: {
     save() {
-      this.$store.dispatch("editAnimal", this.animal)
-      this.showModal = false
+      this.$store.dispatch("editAnimal", this.animal);
+      this.showModal = false;
     },
     search() {
       const vaca = this.$store.state.animals.find(animal => {
@@ -121,4 +117,3 @@ export default {
   }
 };
 </script>
-
