@@ -12,13 +12,13 @@
     <br>
     <div v-if="animal.number">
       <p>
-        <q-card inline style="width: 500px">
+        <q-card inline style="width: 100%">
           <q-card-title>
             {{animal.name}}
             <!--  <q-rating slot="subtitle" v-model="stars" :max="5" />-->
             <div slot="right" class="row items-center">
               <q-icon name="info"/>
-              {{animal.typefecundation}}
+              {{animal.fecudationType}}
             </div>
           </q-card-title>
           <q-card-main>
@@ -29,7 +29,7 @@
             <br>
             <p class="text-faded">Último Parto: {{animal.parturition}}</p>
             <p class="text-faded">Data de Fecundação: {{animal.fecudation}}</p>
-            <p class="text-faded">Diagnóstico de Gestação: {{prenha}}</p>
+            <p class="text-faded">Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
           </q-card-main>
           <q-card-separator/>
           <q-card-actions>
@@ -42,7 +42,7 @@
         <br>-->
       </p>
     </div>
-    <q-modal v-model="showModal">
+    <q-modal v-model="showModal" minimized>
       <div style="padding: 16px">
         <div class="q-title text-center">Adicionar Dados</div>
         <q-field>
@@ -66,13 +66,13 @@
             style="padding:16px"
             val="cobertura"
             label="Cobertura"
-            v-model="animal.cobertura"
+            v-model="animal.fecudationType"
           />
           <q-radio
             style="padding:16px"
             val="inseminacao"
             label="Inseminação"
-            v-model="animal.inseminacao"
+            v-model="animal.fecudationType"
           />
         </q-field>
         <q-field>
@@ -80,7 +80,7 @@
         </q-field>
         <q-btn
           round
-          @click="showModal = false"
+          @click="save"
           color="green"
           icon="check"
           style="margin-right: 8px"
@@ -101,6 +101,10 @@ export default {
     };
   },
   methods: {
+    save() {
+      this.$store.dispatch("editAnimal", this.animal)
+      this.showModal = false
+    },
     search() {
       const vaca = this.$store.state.animals.find(animal => {
         return animal.number == this.number;
@@ -113,15 +117,6 @@ export default {
     },
     edit() {
       this.$router.push("/add-animal/" + this.animal.number);
-    },
-    prenha() {
-      if (animal.pregnancy == true) {
-        animal.status = "Prenha";
-        
-      } else {
-        animal.status = "Vazia";
-        
-      }
     }
   }
 };

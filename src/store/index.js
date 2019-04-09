@@ -10,8 +10,12 @@ const Store = new Vuex.Store({
   },
   getters: {},
   actions: {
-    saveAnimal({ commit }, animal) {
-      commit("addAnimal", animal);
+    saveAnimal({ commit, state }, animal) {
+      if (!state.animals.find(a => a.number == animal.number)) {
+        commit("addAnimal", animal);
+      } else {
+        alert("Essa vaca já existe!");
+      }
     },
     editAnimal({ commit }, animal) {
       commit("updateAnimal", animal);

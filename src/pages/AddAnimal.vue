@@ -3,15 +3,24 @@
     <div class="q-title text-center">{{ title }}</div>
     <!--<span>{{ animal }}</span>-->
     <form @submit.prevent="save">
-      <q-field>
-        <q-input style="padding: 16px" float-label="Número da Vaca" v-model="animal.number"/>
-      </q-field>
-      <q-field>
-        <q-input style="padding: 16px" float-label="Nome da Vaca" v-model="animal.name"/>
-      </q-field>
-      <q-field>
-        <q-input style="padding: 16px" float-label="Data de Nascimento" v-model="animal.birthday"/>
-      </q-field>
+      <div class="row gutter-md">
+        <div class="col-12">
+          <q-field>
+            <q-input float-label="Nome da Vaca" v-model="animal.name"/>
+          </q-field>
+        </div>
+        <div class="col-12">
+          <q-field>
+            <q-input float-label="Número da Vaca" v-model="animal.number"/>
+          </q-field>
+        </div>
+        <div class="col-12">
+          <q-field>
+            <q-input float-label="Data de Nascimento" v-model="animal.birthday"/>
+          </q-field>
+        </div>
+      </div>
+
       <br>
       <div class="flex justify-center">
         <q-btn type="submit" color="green" label="Salvar"/>
@@ -37,16 +46,16 @@ export default {
   },
   methods: {
     save() {
-      if (this.$route.params.number){
-        alert("vaca já cadastrada!")
-        this.$store.dispatch("editAnimal", this.animal);
-      }else{
       if (this.$route.params.number) {
+        alert("vaca já cadastrada!");
         this.$store.dispatch("editAnimal", this.animal);
       } else {
-        this.$store.dispatch("saveAnimal", this.animal);
-        this.animal = {};
-      }
+        if (this.$route.params.number) {
+          this.$store.dispatch("editAnimal", this.animal);
+        } else {
+          this.$store.dispatch("saveAnimal", this.animal);
+          this.animal = {};
+        }
       }
     }
   },
