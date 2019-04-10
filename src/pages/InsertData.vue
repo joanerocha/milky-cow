@@ -34,6 +34,16 @@
             >Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
           </q-card-main>
           <q-card-separator/>
+          <!--SEPARADOR PARA RELATO DE PREVISÕES-->
+          <q-card-main v-if="animal.pregnancy">
+            <q-icon name="note"/>RELATO DE PREVISÕES
+            <p class="text-faded">Previsão de Parto: {{animal.parturition}}</p>
+            <p class="text-faded">Previsão de Secagem: {{animal.fecudation}}</p>
+            <p
+              class="text-faded"
+            >Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
+          </q-card-main>
+          <q-card-separator/>
           <q-card-actions>
             <q-btn round @click="edit" color="green" icon="edit" style="margin-right: 8px"/>
             <q-btn round @click="showModal = true" color="blue" icon="library_add"/>

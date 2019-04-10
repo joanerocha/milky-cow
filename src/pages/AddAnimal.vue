@@ -2,7 +2,7 @@
   <div style="padding: 16px">
     <div class="q-title text-center">{{ title }}</div>
     <!--<span>{{ animal }}</span>-->
-    <form @submit.prevent="save">
+    <form id="app" @submit.prevent="save">
       <div class="row gutter-md">
         <div class="col-12">
           <q-field>
