@@ -26,11 +26,11 @@
           <q-item-side icon="search"/>
           <q-item-main label="Buscar Animal"/>
         </q-item>
-        <q-item @click.native="$router.push('a')">
+        <q-item @click.native="$router.push('insert-chart')">
           <q-item-side icon="insert_chart"/>
           <q-item-main label="Relatórios"/>
         </q-item>
-        <q-item @click.native="$router.push('a')">
+        <q-item @click.native="$router.push('record')">
           <q-item-side icon="show_chart"/>
           <q-item-main label="Relatórios Produtivos"/>
         </q-item>

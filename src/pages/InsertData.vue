@@ -37,7 +37,7 @@
           <!--SEPARADOR PARA RELATO DE PREVISÕES-->
           <q-card-main v-if="animal.pregnancy">
             <q-icon name="note"/>RELATO DE PREVISÕES
-            <p class="text-faded">Previsão de Parto: {{animal.parturition}}</p>
+            <p class="text-faded">Previsão de Parto: {{parturitionforecast()}}</p>
             <p class="text-faded">Previsão de Secagem: {{animal.fecudation}}</p>
             <p
               class="text-faded"
@@ -123,6 +123,13 @@ export default {
     },
     edit() {
       this.$router.push("/add-animal/" + this.animal.number);
+    },
+    parturitionforecast() {
+      ///var parturitionforecast = animal.fecudation;
+      var time = new Date(this.animal.fecudation);
+      var outraData = new Date();
+      outraData.setDate(time.getDate(), time.getMonth(), +5);
+      return outraData;
     }
   }
 };
