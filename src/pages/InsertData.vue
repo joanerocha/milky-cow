@@ -38,7 +38,7 @@
           <q-card-main v-if="animal.pregnancy">
             <q-icon name="note"/>RELATO DE PREVISÕES
             <p class="text-faded">Previsão de Parto: {{parturitionforecast()}}</p>
-            <p class="text-faded">Previsão de Secagem: {{animal.fecudation}}</p>
+            <p class="text-faded">Previsão de Secagem: {{drying()}}</p>
             <p
               class="text-faded"
             >Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
@@ -125,11 +125,21 @@ export default {
       this.$router.push("/add-animal/" + this.animal.number);
     },
     parturitionforecast() {
-      ///var parturitionforecast = animal.fecudation;
-      var time = new Date(this.animal.fecudation);
-      var outraData = new Date();
-      outraData.setDate(time.getDate(), time.getMonth(), +5);
-      return outraData;
+      //alert(this.animal.fecudation);
+      var date = Date.parse(this.animal.fecudation);
+      date += 283 * 86400000;
+      var outraData = new Date(date);
+      //alert(outraData);
+      return outraData.toLocaleString();
+    },
+    drying() {
+      var dateDrying = Date.parse(this.animal.fecudation);
+      dateDrying += 224 * 86400000;
+      var outraData = new Date(dateDrying);
+      //var data = new Date();
+      //data.setDate(data.getDate() - 14);
+      //alert(outraData.toLocaleString());
+      return outraData.toLocaleString();
     }
   }
 };
