@@ -39,9 +39,7 @@
             <q-icon name="note"/>RELATO DE PREVISÕES
             <p class="text-faded">Previsão de Parto: {{parturitionforecast()}}</p>
             <p class="text-faded">Previsão de Secagem: {{drying()}}</p>
-            <p
-              class="text-faded"
-            >Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
+            <p class="text-faded">Intervalo de Parto: {{breakParturition()}}</p>
           </q-card-main>
           <q-card-separator/>
           <q-card-actions>
@@ -136,10 +134,14 @@ export default {
       var dateDrying = Date.parse(this.animal.fecudation);
       dateDrying += 224 * 86400000;
       var outraData = new Date(dateDrying);
-      //var data = new Date();
-      //data.setDate(data.getDate() - 14);
-      //alert(outraData.toLocaleString());
       return outraData.toLocaleString();
+    },
+    breakParturition() {
+      var date1 = new Date(this.animal.parturition);
+      var date2 = new Date(this.animal.fecudation);
+      var timeDiff = Math.abs(date2.getTime() - date1.getTime());
+      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return diffDays + " Dias";
     }
   }
 };
