@@ -44,12 +44,22 @@
           <q-card-separator/>
           <q-card-actions>
             <q-btn round @click="edit" color="green" icon="edit" style="margin-right: 8px"/>
-            <q-btn round @click="showModal = true" color="blue" icon="library_add"/>
+            <q-btn
+              round
+              @click="showModal = true"
+              color="green"
+              icon="add_comment"
+              style="margin-right: 8px"
+            />
+            <q-btn
+              round
+              @click="showModal = true"
+              color="green"
+              icon="description"
+              style="margin-right: 8px"
+            />
           </q-card-actions>
         </q-card>
-        <!--<b>Animal:</b>
-        {{animal.name}} {{animal.number}} {{animal.birthday}}
-        <br>-->
       </p>
     </div>
     <q-modal v-model="showModal" minimized>
@@ -123,20 +133,35 @@ export default {
       this.$router.push("/add-animal/" + this.animal.number);
     },
     parturitionforecast() {
-      //alert(this.animal.fecudation);
+      //previsão de parto
       var date = Date.parse(this.animal.fecudation);
       date += 283 * 86400000;
       var outraData = new Date(date);
-      //alert(outraData);
       return outraData.toLocaleString();
     },
     drying() {
+      // secagem
       var dateDrying = Date.parse(this.animal.fecudation);
-      dateDrying += 224 * 86400000;
+      dateDrying += 223 * 86400000;
       var outraData = new Date(dateDrying);
       return outraData.toLocaleString();
     },
     breakParturition() {
+      //consertar
+      // intervalo de parto
+      var dateParturition = new Date(this.animal.parturition);
+      alert(this.parturitionforecast());
+      var date = this.parturitionforecast();
+      //alert(date);
+      var dateForecast = new Date(date);
+      var timeDiff = Math.abs(
+        dateForecast.getTime() - dateParturition.getTime()
+      );
+      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
+      return diffDays + " Dias";
+    },
+
+    delayed() {
       var date1 = new Date(this.animal.parturition);
       var date2 = new Date(this.animal.fecudation);
       var timeDiff = Math.abs(date2.getTime() - date1.getTime());
