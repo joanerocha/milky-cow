@@ -135,25 +135,24 @@ export default {
     parturitionforecast() {
       //previsão de parto
       var date = Date.parse(this.animal.fecudation);
-      date += 283 * 86400000;
-      var outraData = new Date(date);
-      return outraData.toLocaleString();
+      date += 282 * 86400000;
+      var pf = new Date(date);
+      return pf.toLocaleString();
     },
     drying() {
       // secagem
       var dateDrying = Date.parse(this.animal.fecudation);
-      dateDrying += 223 * 86400000;
-      var outraData = new Date(dateDrying);
-      return outraData.toLocaleString();
+      dateDrying += 222 * 86400000;
+      var drying = new Date(dateDrying);
+      return drying.toLocaleString();
     },
     breakParturition() {
       //consertar
       // intervalo de parto
       var dateParturition = new Date(this.animal.parturition);
-      alert(this.parturitionforecast());
-      var date = this.parturitionforecast();
-      //alert(date);
-      var dateForecast = new Date(date);
+      //alert(this.animal.parturition);
+      var dateForecast = new Date(this.parturitionforecast());
+      //alert(this.parturitionforecast());
       var timeDiff = Math.abs(
         dateForecast.getTime() - dateParturition.getTime()
       );
