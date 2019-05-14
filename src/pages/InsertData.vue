@@ -27,8 +27,8 @@
             <q-icon name="event"/>
             Nascimento: {{animal.birthday}}
             <br>
-            <p class="text-faded">Último Parto: {{animal.parturition}}</p>
-            <p class="text-faded">Data de Fecundação: {{animal.fecudation}}</p>
+            <p class="text-faded">Último Parto: {{animal.parturition | date}}</p>
+            <p class="text-faded">Data de Fecundação: {{animal.fecudation | date}}</p>
             <p
               class="text-faded"
             >Diagnóstico de Gestação: {{ animal.pregnancy ? 'Prenha' : 'Vazia'}}</p>
@@ -37,9 +37,11 @@
           <!--SEPARADOR PARA RELATO DE PREVISÕES-->
           <q-card-main v-if="animal.pregnancy">
             <q-icon name="note"/>RELATO DE PREVISÕES
-            <p class="text-faded">Previsão de Parto: {{parturitionforecast()}}</p>
-            <p class="text-faded">Previsão de Secagem: {{drying()}}</p>
-            <p class="text-faded">Intervalo de Parto: {{breakParturition()}}</p>
+            <p class="text-faded">Previsão de Parto: {{animal.fecudation | dateAdd('282')}}</p>
+            <p class="text-faded">Previsão de Secagem: {{animal.fecudation | dateAdd('222')}}</p>
+            <p
+              class="text-faded"
+            >Intervalo de Parto: {{animal.parturition | dateInterval(282, animal.fecudation)+ ' DIAS'}}</p>
           </q-card-main>
           <q-card-separator/>
           <q-card-actions>
@@ -131,41 +133,6 @@ export default {
     },
     edit() {
       this.$router.push("/add-animal/" + this.animal.number);
-    },
-    parturitionforecast() {
-      //previsão de parto
-      var date = Date.parse(this.animal.fecudation);
-      date += 282 * 86400000;
-      var pf = new Date(date);
-      return pf.toLocaleString();
-    },
-    drying() {
-      // secagem
-      var dateDrying = Date.parse(this.animal.fecudation);
-      dateDrying += 222 * 86400000;
-      var drying = new Date(dateDrying);
-      return drying.toLocaleString();
-    },
-    breakParturition() {
-      //consertar
-      // intervalo de parto
-      var dateParturition = new Date(this.animal.parturition);
-      //alert(this.animal.parturition);
-      var dateForecast = new Date(this.parturitionforecast());
-      //alert(this.parturitionforecast());
-      var timeDiff = Math.abs(
-        dateForecast.getTime() - dateParturition.getTime()
-      );
-      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      return diffDays + " Dias";
-    },
-
-    delayed() {
-      var date1 = new Date(this.animal.parturition);
-      var date2 = new Date(this.animal.fecudation);
-      var timeDiff = Math.abs(date2.getTime() - date1.getTime());
-      var diffDays = Math.ceil(timeDiff / (1000 * 3600 * 24));
-      return diffDays + " Dias";
     }
   }
 };
