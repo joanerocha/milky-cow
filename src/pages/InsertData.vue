@@ -20,13 +20,14 @@
               <q-icon name="info"/>
               {{animal.fecudationType}}
             </div>
+            <div>
+              <q-icon name="vpn_key"/>
+              ID: {{animal.number}}
+              <q-icon name="event"/>
+              Nascimento: {{animal.birthday | date}}
+            </div>
           </q-card-title>
           <q-card-main>
-            <q-icon name="vpn_key"/>
-            ID: {{animal.number}}
-            <q-icon name="event"/>
-            Nascimento: {{animal.birthday}}
-            <br>
             <p class="text-faded">Último Parto: {{animal.parturition | date}}</p>
             <p class="text-faded">Data de Fecundação: {{animal.fecudation | date}}</p>
             <p
@@ -36,12 +37,23 @@
           <q-card-separator/>
           <!--SEPARADOR PARA RELATO DE PREVISÕES-->
           <q-card-main v-if="animal.pregnancy">
-            <q-icon name="note"/>RELATO DE PREVISÕES
+            <q-card-title>
+              <q-icon name="note"/>RELATO DE PREVISÕES
+            </q-card-title>
             <p class="text-faded">Previsão de Parto: {{animal.fecudation | dateAdd('282')}}</p>
             <p class="text-faded">Previsão de Secagem: {{animal.fecudation | dateAdd('222')}}</p>
             <p
               class="text-faded"
             >Intervalo de Parto: {{animal.parturition | dateInterval(282, animal.fecudation)+ ' DIAS'}}</p>
+          </q-card-main>
+          <q-card-separator/>
+          <!--SEPARADOR PARA RELATO DE PARTO-->
+          <q-card-main v-if="animal.relatorio && animal.pregnancy">
+            <q-card-title>
+              <q-icon name="note"/>RELATO DE PARTO
+            </q-card-title>
+            <p class="text-faded">Quantidade de Bezerros: {{animal.qtdBezerros}}</p>
+            <p class="text-faded">Data do Parto: {{animal.dateParto | date}}</p>
           </q-card-main>
           <q-card-separator/>
           <q-card-actions>
@@ -55,9 +67,9 @@
             />
             <q-btn
               round
-              @click="showModal = true"
+              @click="showModal2 = true"
               color="green"
-              icon="description"
+              icon="insert_chart"
               style="margin-right: 8px"
             />
           </q-card-actions>
@@ -103,6 +115,33 @@
         <q-btn round @click="save" color="green" icon="check" style="margin-right: 8px"/>
       </div>
     </q-modal>
+    <q-modal v-model="showModal2" minimized>
+      <div style="padding: 16px">
+        <div class="q-title text-center">Dados do Parto</div>
+        <q-field>
+          <q-input
+            style="padding:16px"
+            stack-label="Quantos Bezerros?"
+            type="number"
+            v-model="animal.qtdBezerros"
+          />
+        </q-field>
+
+        <q-field>
+          <q-input
+            style="padding:16px"
+            stack-label="Data Nascimento Bezerro"
+            type="date"
+            v-model="animal.dateParto"
+          />
+        </q-field>
+
+        <q-field>
+          <q-toggle style="padding:16px" v-model="animal.relatorio" label="Pariu"/>
+        </q-field>
+        <q-btn round @click="save" color="green" icon="check" style="margin-right: 8px"/>
+      </div>
+    </q-modal>
   </div>
 </template>
 
@@ -113,13 +152,15 @@ export default {
     return {
       number: null,
       animal: {},
-      showModal: false
+      showModal: false,
+      showModal2: false
     };
   },
   methods: {
     save() {
       this.$store.dispatch("editAnimal", this.animal);
       this.showModal = false;
+      this.showModal2 = false;
     },
     search() {
       const vaca = this.$store.state.animals.find(animal => {

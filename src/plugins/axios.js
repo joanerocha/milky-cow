@@ -16,15 +16,11 @@ export default ({ app, router, store, Vue }) => {
 
   Vue.filter("dateInterval", function(date, days, fecudationDate) {
     const end = moment(fecudationDate).add(days, "days");
+    return moment(end).diff(date, "days");
+  });
+  Vue.filter("dateComparar", function(date, days, fecudationDate) {
+    const end = moment(fecudationDate).add(days, "days");
     alert(end);
     return moment(end).diff(date, "days");
   });
-
-  //Vue.filter("dateInterval", function(date, days, fecudationDate) {
-  //const end = moment(fecudationDate).add(days, "days");
-  //return moment(date).from(end, true);
-  //var setInterval = moment.interval("animal.parturition/end");
-  //setInterval.start();
-  //setInterval.period().humanize();
-  //});
 };
