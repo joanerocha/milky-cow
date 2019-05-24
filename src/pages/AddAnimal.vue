@@ -1,17 +1,16 @@
 <template>
   <div style="padding: 16px">
     <div class="q-title text-center">{{ title }}</div>
-    <!--<span>{{ animal }}</span>-->
     <form id="app" @submit.prevent="save">
       <div class="row gutter-md">
         <div class="col-12">
           <q-field>
-            <q-input float-label="Nome da Vaca" v-model="animal.name"/>
+            <q-input stack-label="Nome da Vaca" v-model="animal.name"/>
           </q-field>
         </div>
         <div class="col-12">
           <q-field>
-            <q-input float-label="Número da Vaca" v-model="animal.number"/>
+            <q-input stack-label="Número da Vaca" v-model="animal.number"/>
           </q-field>
         </div>
         <div class="col-12">
@@ -20,30 +19,56 @@
           </q-field>
         </div>
       </div>
-
       <br>
-      <div class="flex justify-center">
+      <div style="padding: 16px" class="flex justify-center">
         <q-btn type="submit" color="green" label="Salvar"/>
       </div>
     </form>
-    <ul>
-      <li v-for="animal in $store.state.animals" :key="animal.number">{{animal.name}}</li>
-    </ul>
+    <q-table
+      title="Vacas Cadastradas"
+      :data="$store.state.animals"
+      :columns="columns"
+      row-key="name"
+    ></q-table>
   </div>
 </template>
 
-<style>
-</style>
-
 <script>
+import moment from "moment";
 export default {
   name: "AddAnimal",
-  data() {
-    return {
-      animal: {},
-      title: "Cadastro de Animal"
-    };
-  },
+  data: () => ({
+    animal: {},
+    title: "Cadastro de Animal",
+    columns: [
+      {
+        name: "number",
+        required: true,
+        label: "ID",
+        align: "left",
+        field: "number",
+        sortable: true,
+        classes: "my-class",
+        style: "width: 25px"
+      },
+      {
+        name: "name",
+        label: "Nome",
+        field: "name",
+        align: "left",
+        style: "width: 250px",
+        sortable: true
+      },
+      {
+        name: "birthday",
+        label: "Nascimento",
+        field: "birthday",
+        align: "left",
+        sortable: true,
+        format: val => moment(val).format("DD/MM/Y")
+      }
+    ]
+  }),
   methods: {
     save() {
       if (this.$route.params.number) {

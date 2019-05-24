@@ -34,6 +34,10 @@
           <q-item-side icon="show_chart"/>
           <q-item-main label="Relatórios Produtivos"/>
         </q-item>
+        <q-item @click.native="$router.push('table')">
+          <q-item-side icon="show_chart"/>
+          <q-item-main label="Relatórios Produtivos"/>
+        </q-item>
       </q-list>
     </q-layout-drawer>
 
