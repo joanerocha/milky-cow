@@ -5,6 +5,8 @@ export default ({ app, router, store, Vue }) => {
   Vue.prototype.$axios = axios;
 
   Vue.filter("date", function(date) {
+    console.log(date);
+    if (!date) return "--:--";
     return moment(date).format("DD/MM/YYYY");
   });
 
@@ -15,10 +17,12 @@ export default ({ app, router, store, Vue }) => {
   });
 
   Vue.filter("dateInterval", function(date, days, fecudationDate) {
+    if (!date) return "--:--";
     const end = moment(fecudationDate).add(days, "days");
     return moment(end).diff(date, "days");
   });
   Vue.filter("dateComparar", function(date, days, fecudationDate) {
+    if (!date) return "--:--";
     const end = moment(fecudationDate).add(days, "days");
     alert(end);
     return moment(end).diff(date, "days");
