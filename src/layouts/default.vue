@@ -18,29 +18,28 @@
     >
       <q-list no-border link inset-delimiter>
         <q-list-header>Menu</q-list-header>
+        <q-item @click.native="$router.push('/indext')">
+          <q-item-side icon="home"/>
+          <q-item-main label="Início"/>
+        </q-item>
         <q-item @click.native="$router.push('/add-animal')">
           <q-item-side icon="add_circle"/>
-          <q-item-main label="Cadastro de Animal"/>
+          <q-item-main label="Cadastrar Vaca"/>
         </q-item>
         <q-item @click.native="$router.push('/insert-data')">
           <q-item-side icon="search"/>
-          <q-item-main label="Buscar Animal"/>
-        </q-item>
-        <q-item @click.native="$router.push('insert-chart')">
-          <q-item-side icon="insert_chart"/>
-          <q-item-main label="Relatórios"/>
+          <q-item-main label="Buscar Vaca"/>
         </q-item>
         <q-item @click.native="$router.push('record')">
-          <q-item-side icon="show_chart"/>
-          <q-item-main label="Relatórios Produtivos"/>
+          <q-item-side icon="table_rows"/>
+          <q-item-main label="Tabela"/>
         </q-item>
         <q-item @click.native="$router.push('table')">
-          <q-item-side icon="show_chart"/>
-          <q-item-main label="Relatórios Produtivos"/>
+          <q-item-side icon="analytics"/>
+          <q-item-main label="Gráfico"/>
         </q-item>
       </q-list>
     </q-layout-drawer>
-
     <q-page-container>
       <router-view/>
     </q-page-container>

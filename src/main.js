@@ -2,20 +2,16 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import moment from "moment";
-moment.locale("pt-br");
-
 import Quasar, * as All from "quasar-framework/dist/quasar.mat.esm.js";
-
 import App from "./App";
 import Router from "./router";
 import Store from "./store";
-
 import { MagicPluginLoader } from "./helpers";
-
 import "quasar-framework/dist/quasar.mat.styl";
 import "quasar-extras/material-icons.js";
 import "./css/styles.mat.styl";
 
+moment.locale("pt-br");
 Vue.config.productionTip = false;
 
 // init quasar

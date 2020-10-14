@@ -5,7 +5,11 @@
       <div class="row gutter-md">
         <div class="col-12">
           <q-field>
-            <q-input stack-label="Nome da Vaca" v-model="animal.name"/>
+            <q-input
+              stack-label="Nome da Vaca"
+              v-model="animal.name"
+              :rules="[val => !!val || 'Field is required']"
+            />
           </q-field>
         </div>
         <div class="col-12">
@@ -24,16 +28,28 @@
         <q-btn type="submit" color="green" label="Salvar"/>
       </div>
     </form>
-    <q-table
-      title="Vacas Cadastradas"
-      :data="$store.state.animals"
-      :columns="columns"
-      row-key="name"
-    ></q-table>
+    <div>
+      <div>
+        <q-table id="app" 
+          title="Vacas Cadastradas"
+          :data="$store.state.animals"
+          :columns="columns"
+          row-key="id"
+          @click.native="search"
+        >
+        <q-tr>
+          <q-td>
+
+            </q-td>
+          </q-tr>
+          </q-table>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+
 import moment from "moment";
 export default {
   name: "AddAnimal",
@@ -87,7 +103,7 @@ export default {
   created() {
     if (this.$route.params.number) {
       const vaca = this.$store.state.animals.find(animal => {
-        return animal.number == this.$route.params.number;
+        return animal.number === this.$route.params.number;
       });
       if (vaca) {
         this.title = "Editar Animal";
@@ -96,6 +112,22 @@ export default {
       }
       this.animal = vaca;
     }
-  }
+  },
+  search() {
+    const vaca = this.$store.state.animals.find(animal => {
+      return animal.number === this.number;
+    });
+    if (vaca) {
+    } else {
+      alert("Vaca não cadastrada!");
+    }
+    this.animal = vaca;
+  },
+  methods: {
+    rowClick(evt, row) {
+      console.log("clicked on", row);
+      alert("Clicou");
+    },
+  },
 };
 </script>
