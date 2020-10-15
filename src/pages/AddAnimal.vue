@@ -1,55 +1,57 @@
 <template>
   <div style="padding: 16px">
     <div class="q-title text-center">{{ title }}</div>
-    <form id="app" @submit.prevent="save">
-      <div class="row gutter-md">
-        <div class="col-12">
-          <q-field>
-            <q-input
-              stack-label="Nome da Vaca"
-              v-model="animal.name"
-              :rules="[val => !!val || 'Field is required']"
-            />
-          </q-field>
+      <form id="app" @submit.prevent="save">
+        <div class="row gutter-md">
+          <div class="col-12">
+            <q-field>
+              <q-input
+                stack-label="Nome da Vaca"
+                v-model="animal.name"
+                :rules="[(val) => !!val || 'Field is required']"
+              />
+            </q-field>
+          </div>
+          <div class="col-12">
+            <q-field>
+              <q-input stack-label="Número da Vaca" v-model="animal.number" />
+            </q-field>
+          </div>
+          <div class="col-12">
+            <q-field>
+              <q-input
+                type="date"
+                stack-label="Data de Nascimento"
+                v-model="animal.birthday"
+              />
+            </q-field>
+          </div>
         </div>
-        <div class="col-12">
-          <q-field>
-            <q-input stack-label="Número da Vaca" v-model="animal.number"/>
-          </q-field>
+        <br />
+        <div style="padding: 16px" class="flex justify-center">
+          <q-btn type="submit" color="green" label="Salvar" />
         </div>
-        <div class="col-12">
-          <q-field>
-            <q-input type="date" stack-label="Data de Nascimento" v-model="animal.birthday"/>
-          </q-field>
-        </div>
-      </div>
-      <br>
-      <div style="padding: 16px" class="flex justify-center">
-        <q-btn type="submit" color="green" label="Salvar"/>
-      </div>
-    </form>
+      </form>
     <div>
       <div>
-        <q-table id="app" 
+        <q-table
+          id="app"
           title="Vacas Cadastradas"
           :data="$store.state.animals"
           :columns="columns"
           row-key="id"
-          @click.native="search"
+          @click.native="rowClick"
         >
-        <q-tr>
-          <q-td>
-
-            </q-td>
+          <q-tr>
+            <q-td> </q-td>
           </q-tr>
-          </q-table>
+        </q-table>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
 import moment from "moment";
 export default {
   name: "AddAnimal",
@@ -65,7 +67,7 @@ export default {
         field: "number",
         sortable: true,
         classes: "my-class",
-        style: "width: 25px"
+        style: "width: 25px",
       },
       {
         name: "name",
@@ -73,7 +75,7 @@ export default {
         field: "name",
         align: "left",
         style: "width: 250px",
-        sortable: true
+        sortable: true,
       },
       {
         name: "birthday",
@@ -81,28 +83,26 @@ export default {
         field: "birthday",
         align: "left",
         sortable: true,
-        format: val => moment(val).format("DD/MM/Y")
-      }
-    ]
+        format: (val) => moment(val).format("DD/MM/Y"),
+      },
+    ],
   }),
-  methods: {
-    save() {
+  save() {
+    if (this.$route.params.number) {
+      alert("vaca já cadastrada!");
+      this.$store.dispatch("editAnimal", this.animal);
+    } else {
       if (this.$route.params.number) {
-        alert("vaca já cadastrada!");
         this.$store.dispatch("editAnimal", this.animal);
       } else {
-        if (this.$route.params.number) {
-          this.$store.dispatch("editAnimal", this.animal);
-        } else {
-          this.$store.dispatch("saveAnimal", this.animal);
-          this.animal = {};
-        }
+        this.$store.dispatch("saveAnimal", this.animal);
+        this.animal = {};
       }
     }
   },
   created() {
     if (this.$route.params.number) {
-      const vaca = this.$store.state.animals.find(animal => {
+      const vaca = this.$store.state.animals.find((animal) => {
         return animal.number === this.$route.params.number;
       });
       if (vaca) {
@@ -114,7 +114,7 @@ export default {
     }
   },
   search() {
-    const vaca = this.$store.state.animals.find(animal => {
+    const vaca = this.$store.state.animals.find((animal) => {
       return animal.number === this.number;
     });
     if (vaca) {

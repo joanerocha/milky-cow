@@ -11,7 +11,7 @@ export default [
     path: "/",
     component: LayoutDefault,
     children: [
-      { path: "", component: PageIndex },
+      { path: "indext", component: PageIndex },
       { path: "add-animal/:number?", component: AddAnimal },
       { path: "insert-data/:number?", component: InsertData },
       { path: "record", component: Record },
@@ -20,6 +20,6 @@ export default [
   },
   {
     path: "*",
-    component: PageIndex // () => import('../pages/404')
+    component: FourOhFour // () => import('../pages/404')
   }
 ];

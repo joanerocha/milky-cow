@@ -49,7 +49,7 @@
             <p class="text-faded">Previsão de Secagem: {{animal.fecudation | dateAdd('222')}}</p>
             <p
               class="text-faded"
-            >Intervalo de Parto: {{animal.parturition | dateInterval(282, animal.fecudation)+ ' DIAS'}}</p>
+            >Intervalo de Parto: {{ animal.parturition | dateInterval(282, animal.fecudation) + ' DIAS'}}</p>
           </q-card-main>
           <q-card-separator/>
           <!--SEPARADOR PARA RELATO DE PARTO-->
