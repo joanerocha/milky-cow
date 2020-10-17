@@ -1,12 +1,17 @@
 <template>
   <div style="padding: 16px">
-    <form @submit.prevent="search">
-      <q-field>
-        <q-input float-label="Número da Vaca" v-model="number"/>
-      </q-field>
-      <br>
-      <div class="flex justify-center">
-        <q-btn type="submit" color="green" label="Buscar"/>
+    <div class="q-title text-center">{{ title }}</div>
+    <form id="app" @submit.prevent="search">
+      <div class="row gutter-md">
+        <div class="col-12">
+          <q-field>
+            <q-input float-label="Número da Vaca" v-model="number"/>
+          </q-field>
+        </div>
+        <br>
+        <div class="flex justify-center">
+          <q-btn type="submit" color="green" label="Buscar"/>
+        </div>
       </div>
     </form>
     <br>
@@ -44,7 +49,7 @@
             <p class="text-faded">Previsão de Secagem: {{animal.fecudation | dateAdd('222')}}</p>
             <p
               class="text-faded"
-            >Intervalo de Parto: {{animal.parturition | dateInterval(282, animal.fecudation)+ ' DIAS'}}</p>
+            >Intervalo de Parto: {{ animal.parturition | dateInterval(282, animal.fecudation) + ' DIAS'}}</p>
           </q-card-main>
           <q-card-separator/>
           <!--SEPARADOR PARA RELATO DE PARTO-->
@@ -146,6 +151,7 @@
 </template>
 
 <script>
+import moment from "moment";
 export default {
   name: "InsertData",
   data() {
@@ -164,7 +170,7 @@ export default {
     },
     search() {
       const vaca = this.$store.state.animals.find(animal => {
-        return animal.number == this.number;
+        return animal.number === this.number;
       });
       if (vaca) {
       } else {
